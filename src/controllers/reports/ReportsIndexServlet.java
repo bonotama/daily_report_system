@@ -63,4 +63,5 @@ public class ReportsIndexServlet extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/index.jsp");
         rd.forward(request, response);
     }
+
 }

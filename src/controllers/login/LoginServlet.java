@@ -33,10 +33,11 @@ public class LoginServlet extends HttpServlet {
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         request.setAttribute("_token", request.getSession().getId());
         request.setAttribute("hasError", false);
-        if(request.getSession().getAttribute("flush") != null) {
+        if (request.getSession().getAttribute("flush") != null) {
             request.setAttribute("flush", request.getSession().getAttribute("flush"));
             request.getSession().removeAttribute("flush");
         }
@@ -48,7 +49,8 @@ public class LoginServlet extends HttpServlet {
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         Boolean check_result = false;
 
         String code = request.getParameter("code");
@@ -56,29 +58,29 @@ public class LoginServlet extends HttpServlet {
 
         Employee e = null;
 
-        if(code != null && !code.equals("") && plain_pass != null && !plain_pass.equals("")) {
+        if (code != null && !code.equals("") && plain_pass != null && !plain_pass.equals("")) {
             EntityManager em = DBUtil.createEntityManager();
 
             String password = EncryptUtil.getPasswordEncrypt(
                     plain_pass,
-                    (String)this.getServletContext().getAttribute("salt")
-                    );
+                    (String) this.getServletContext().getAttribute("salt"));
 
             try {
                 e = em.createNamedQuery("checkLoginCodeAndPassword", Employee.class)
-                      .setParameter("code", code)
-                      .setParameter("pass", password)
-                      .getSingleResult();
-            } catch(NoResultException ex) {}
+                        .setParameter("code", code)
+                        .setParameter("pass", password)
+                        .getSingleResult();
+            } catch (NoResultException ex) {
+            }
 
             em.close();
 
-            if(e != null) {
+            if (e != null) {
                 check_result = true;
             }
         }
 
-        if(!check_result) {
+        if (!check_result) {
             request.setAttribute("_token", request.getSession().getId());
             request.setAttribute("hasError", true);
 
