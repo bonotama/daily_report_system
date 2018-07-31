@@ -35,12 +35,8 @@
 
 		<div id="pagination">
 			（全 ${reports_count} 件）<br />
-<<<<<<< HEAD
 			<c:forEach var="i" begin="1" end="${((reports_count - 1) / 15) + 1}"
 				step="1">
-=======
-			<c:forEach var="i" begin="1" end="${((reports_count - 1) / 15) + 1}" step="1">
->>>>>>> b8d2ccc625777dc63b20c9aaa35e67736589663a
 				<c:choose>
 					<c:when test="${i == page}">
 						<c:out value="${i}" />&nbsp;
